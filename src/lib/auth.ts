@@ -16,24 +16,23 @@ interface ZitadelUser {
     organization?: { name?: string };
 }
 
-// 类型定义
 interface ZitadelJWT extends JWT {
-  accessToken?: string;
-  idToken?: string;
-  refreshToken?: string;
-  tokenType?: string;
-  expiresIn?: number;
-  expiresAt?: number;
-  user?: ZitadelUser;
-  error?: unknown;
+    accessToken?: string;
+    idToken?: string;
+    refreshToken?: string;
+    tokenType?: string;
+    expiresIn?: number;
+    expiresAt?: number;
+    user?: ZitadelUser;
+    error?: unknown;
 }
 interface ZitadelSession extends Session {
-  accessToken?: string;
-  idToken?: string;
-  refreshToken?: string;
-  tokenType?: string;
-  expiresIn?: number;
-  error?: unknown;
+    accessToken?: string;
+    idToken?: string;
+    refreshToken?: string;
+    tokenType?: string;
+    expiresIn?: number;
+    error?: unknown;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -68,7 +67,7 @@ export const authOptions: NextAuthOptions = {
             clientSecret: process.env.ZITADEL_CLIENT_SECRET as string,
             authorization: {
                 params: {
-                    scope: `openid email profile offline_access urn:zitadel:iam:user:resourceowner urn:zitadel:iam:org:project:id:zitadel:aud`,
+                    scope: `openid email profile offline_access urn:zitadel:iam:user:resourceowner urn:zitadel:iam:org:project:id:zitadel:aud urn:zitadel:iam:user:metadata `,
                 },
             },
             async profile(profile: unknown) {
