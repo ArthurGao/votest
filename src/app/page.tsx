@@ -1,105 +1,120 @@
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowRight, Shield, Users, BarChart3, Lock } from "lucide-react"
+import { BarChart3, Shield, Lock, Users } from "lucide-react"
+import Link from "next/link"
+import { SimpleAuthButton } from "@/components/auth/simple-auth-button"
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Navigation Header */}
+      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Shield className="h-8 w-8 text-blue-600" />
+              <span className="text-2xl font-bold text-gray-900">CISO360AI</span>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <SimpleAuthButton />
+            </div>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-16 text-center">
-        <div className="mx-auto max-w-4xl">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6">
-            Welcome to <span className="text-primary">CISO360AI</span>
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Comprehensive cybersecurity management platform powered by AI. 
-            Streamline your security operations, manage risks, and protect your organization.
+      <div className="container mx-auto px-4 py-16 text-center">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-5xl font-bold text-gray-900 mb-6">Welcome to CISO360AI</h1>
+          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+            Comprehensive cybersecurity management platform powered by AI.
+            <br />
+            Streamline your security operations, manage risks, and protect your
+            <br />
+            organization.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" className="text-lg px-8">
-              <Link href="/dashboard">
-                Go to Dashboard
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
+
+          <div className="flex gap-4 justify-center">
+            <Button asChild size="lg" className="bg-black hover:bg-gray-800">
+              <Link href="/auth/signin">Get Started →</Link>
             </Button>
-            <Button variant="outline" size="lg" className="text-lg px-8">
+            <Button variant="outline" size="lg">
               Learn More
             </Button>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Features Section */}
-      <section className="container mx-auto px-4 py-16">
+      {/* Key Features Section */}
+      <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Key Features</h2>
-          <p className="text-lg text-muted-foreground">
-            Everything you need to manage your cybersecurity posture
-          </p>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Key Features</h2>
+          <p className="text-lg text-gray-600">Everything you need to manage your cybersecurity posture</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {/* Analytics Card */}
+          <Card className="text-center hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <div className="mx-auto w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                <BarChart3 className="h-6 w-6 text-blue-600" />
+              </div>
+              <CardTitle className="text-xl">Analytics</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="text-gray-600">
+                Get insights with AI-powered analytics and comprehensive reporting
+              </CardDescription>
+            </CardContent>
+          </Card>
 
-          <Link href="/dashboard">
-            <Card className="text-center cursor-pointer transition-all hover:shadow-lg hover:scale-105">
-              <CardHeader>
-                <BarChart3 className="h-12 w-12 mx-auto text-primary mb-4" />
-                <CardTitle>Analytics</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Get insights with AI-powered analytics and comprehensive reporting
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </Link>
+          {/* Risk Management Card */}
+          <Card className="text-center hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <div className="mx-auto w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                <Shield className="h-6 w-6 text-green-600" />
+              </div>
+              <CardTitle className="text-xl">Risk Management</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="text-gray-600">
+                Identify, assess, and mitigate cybersecurity risks across your organization
+              </CardDescription>
+            </CardContent>
+          </Card>
 
-          <Link href="/dashboard">
-            <Card className="text-center cursor-pointer transition-all hover:shadow-lg hover:scale-105">
-              <CardHeader>
-                <Shield className="h-12 w-12 mx-auto text-primary mb-4" />
-                <CardTitle>Risk Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Identify, assess, and mitigate cybersecurity risks across your organization
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </Link>
+          {/* Compliance Card */}
+          <Card className="text-center hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <div className="mx-auto w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                <Lock className="h-6 w-6 text-purple-600" />
+              </div>
+              <CardTitle className="text-xl">Compliance</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="text-gray-600">
+                Ensure compliance with industry standards and regulatory requirements
+              </CardDescription>
+            </CardContent>
+          </Card>
 
-          <Link href="/dashboard">
-            <Card className="text-center cursor-pointer transition-all hover:shadow-lg hover:scale-105">
-              <CardHeader>
-                <Lock className="h-12 w-12 mx-auto text-primary mb-4" />
-                <CardTitle>Compliance</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Ensure compliance with industry standards and regulatory requirements
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Link href="/organization/users">
-            <Card className="text-center cursor-pointer transition-all hover:shadow-lg hover:scale-105">
-              <CardHeader>
-                <Users className="h-12 w-12 mx-auto text-primary mb-4" />
-                <CardTitle>Organisation Management</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription>
-                  Manage user accounts, roles, and permissions with advanced access controls
-                </CardDescription>
-              </CardContent>
-            </Card>
-          </Link>
-
+          {/* Organisation Management Card */}
+          <Card className="text-center hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <div className="mx-auto w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                <Users className="h-6 w-6 text-orange-600" />
+              </div>
+              <CardTitle className="text-xl">Organisation Management</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <CardDescription className="text-gray-600">
+                Manage user accounts, roles, and permissions with advanced access controls
+              </CardDescription>
+            </CardContent>
+          </Card>
         </div>
-      </section>
-
+      </div>
     </div>
   )
 }

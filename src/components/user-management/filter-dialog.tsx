@@ -30,7 +30,7 @@ export function FilterDialog({ open, onOpenChange }: FilterDialogProps) {
   const [selectedRoles, setSelectedRoles] = React.useState<string[]>([])
   const [selectedDepartments, setSelectedDepartments] = React.useState<string[]>([])
 
-  const roles = ["Admin", "Manager", "Contributor", "Auditor", "Guest"]
+  const roles = ["Admin", "Manager", "Developer", "Designer", "Analyst", "Sales Rep"]
   const departments = ["Engineering", "Design", "Marketing", "Sales", "Finance", "Human Resources"]
 
   const handleRoleChange = (role: string, checked: boolean) => {

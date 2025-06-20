@@ -16,7 +16,98 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
-import { users } from "@/lib/placeholder-data"
+
+// Sample user data
+const users = [
+  {
+    id: "1",
+    name: "Sarah Johnson",
+    email: "sarah.johnson@company.com",
+    role: "Admin",
+    department: "Engineering",
+    status: "Active",
+    lastLogin: "2024-01-15",
+    avatar: "/placeholder.svg?height=32&width=32",
+    initials: "SJ",
+  },
+  {
+    id: "2",
+    name: "Mike Chen",
+    email: "mike.chen@company.com",
+    role: "Developer",
+    department: "Engineering",
+    status: "Active",
+    lastLogin: "2024-01-14",
+    avatar: "/placeholder.svg?height=32&width=32",
+    initials: "MC",
+  },
+  {
+    id: "3",
+    name: "Emily Davis",
+    email: "emily.davis@company.com",
+    role: "Designer",
+    department: "Design",
+    status: "Active",
+    lastLogin: "2024-01-13",
+    avatar: "/placeholder.svg?height=32&width=32",
+    initials: "ED",
+  },
+  {
+    id: "4",
+    name: "Alex Rodriguez",
+    email: "alex.rodriguez@company.com",
+    role: "Manager",
+    department: "Marketing",
+    status: "Inactive",
+    lastLogin: "2024-01-10",
+    avatar: "/placeholder.svg?height=32&width=32",
+    initials: "AR",
+  },
+  {
+    id: "5",
+    name: "Lisa Wang",
+    email: "lisa.wang@company.com",
+    role: "Developer",
+    department: "Engineering",
+    status: "Active",
+    lastLogin: "2024-01-15",
+    avatar: "/placeholder.svg?height=32&width=32",
+    initials: "LW",
+  },
+  {
+    id: "6",
+    name: "David Brown",
+    email: "david.brown@company.com",
+    role: "Analyst",
+    department: "Finance",
+    status: "Active",
+    lastLogin: "2024-01-12",
+    avatar: "/placeholder.svg?height=32&width=32",
+    initials: "DB",
+  },
+  {
+    id: "7",
+    name: "Jennifer Wilson",
+    email: "jennifer.wilson@company.com",
+    role: "HR Manager",
+    department: "Human Resources",
+    status: "Active",
+    lastLogin: "2024-01-14",
+    avatar: "/placeholder.svg?height=32&width=32",
+    initials: "JW",
+  },
+  {
+    id: "8",
+    name: "Robert Taylor",
+    email: "robert.taylor@company.com",
+    role: "Sales Rep",
+    department: "Sales",
+    status: "Inactive",
+    lastLogin: "2024-01-08",
+    avatar: "/placeholder.svg?height=32&width=32",
+    initials: "RT",
+  },
+]
 
 interface UserTableProps {
   searchQuery: string
@@ -125,7 +216,7 @@ export function UserTable({ searchQuery }: UserTableProps) {
                 <TableCell>
                   <div className="flex items-center gap-3">
                     <Avatar className="h-8 w-8">
-                      <AvatarImage src={user.avatar} alt={user.name} />
+                      <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
                       <AvatarFallback className="text-xs">{user.initials}</AvatarFallback>
                     </Avatar>
                     <div>

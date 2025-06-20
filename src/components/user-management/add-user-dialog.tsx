@@ -100,9 +100,10 @@ export function AddUserDialog({ open, onOpenChange }: AddUserDialogProps) {
                   <SelectContent>
                     <SelectItem value="admin">Admin</SelectItem>
                     <SelectItem value="manager">Manager</SelectItem>
-                    <SelectItem value="contributor">Contributor</SelectItem>
-                    <SelectItem value="auditor">Auditor</SelectItem>
-                    <SelectItem value="guest">Guest</SelectItem>
+                    <SelectItem value="developer">Developer</SelectItem>
+                    <SelectItem value="designer">Designer</SelectItem>
+                    <SelectItem value="analyst">Analyst</SelectItem>
+                    <SelectItem value="sales">Sales Rep</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

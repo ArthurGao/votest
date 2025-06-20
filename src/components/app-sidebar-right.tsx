@@ -1,7 +1,7 @@
 "use client"
 
 import type * as React from "react"
-import { Settings, Star, Users } from "lucide-react"
+import { Calendar, FileText, MessageSquare, Settings, Star, Users } from "lucide-react"
 
 import {
   Sidebar,
@@ -18,7 +18,75 @@ import {
 } from "@/components/ui/sidebar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { notifications, quickActions, recentActivity } from "@/lib/placeholder-data"
+
+// Sample data for right sidebar
+const notifications = [
+  {
+    id: 1,
+    title: "Q4 revenue target exceeded by 12%",
+    time: "5 min ago",
+    type: "success",
+  },
+  {
+    id: 2,
+    title: "New user registration spike detected",
+    time: "18 min ago",
+    type: "info",
+  },
+  {
+    id: 3,
+    title: "Server response time increased",
+    time: "1 hour ago",
+    type: "warning",
+  },
+  {
+    id: 4,
+    title: "Weekly report is ready for review",
+    time: "2 hours ago",
+    type: "info",
+  },
+]
+
+const quickActions = [
+  {
+    title: "New Document",
+    icon: FileText,
+    action: () => console.log("New document"),
+  },
+  {
+    title: "Schedule Meeting",
+    icon: Calendar,
+    action: () => console.log("Schedule meeting"),
+  },
+  {
+    title: "Send Message",
+    icon: MessageSquare,
+    action: () => console.log("Send message"),
+  },
+]
+
+const recentActivity = [
+  {
+    title: "Revenue dashboard updated with Q4 data",
+    time: "5 min ago",
+    user: "System",
+  },
+  {
+    title: "New conversion funnel analysis completed",
+    time: "32 min ago",
+    user: "Sarah Johnson",
+  },
+  {
+    title: "User growth metrics exported to CSV",
+    time: "1 hour ago",
+    user: "Mike Chen",
+  },
+  {
+    title: "Traffic sources report generated",
+    time: "2 hours ago",
+    user: "Emily Davis",
+  },
+]
 
 export function AppSidebarRight({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (

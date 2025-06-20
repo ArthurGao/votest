@@ -1,35 +1,35 @@
-import { ArrowDownIcon, ArrowUpIcon, Shield, AlertTriangle, Users, Activity } from "lucide-react"
+import { ArrowDownIcon, ArrowUpIcon, DollarSign, TrendingUp, Users, Activity } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const stats = [
   {
-    title: "Security Score",
-    value: "87/100",
-    change: "+5.2%",
+    title: "Total Revenue",
+    value: "$3,924,000",
+    change: "+12.5%",
     changeType: "increase" as const,
-    icon: Shield,
+    icon: DollarSign,
   },
   {
-    title: "Active Threats",
-    value: "23",
-    change: "-12.1%",
-    changeType: "decrease" as const,
-    icon: AlertTriangle,
-  },
-  {
-    title: "Vulnerability Count",
-    value: "147",
-    change: "+8.7%",
-    changeType: "increase" as const,
-    icon: Activity,
-  },
-  {
-    title: "Compliance Rate",
-    value: "94.3%",
-    change: "+2.1%",
+    title: "Active Users",
+    value: "4,100",
+    change: "+8.2%",
     changeType: "increase" as const,
     icon: Users,
+  },
+  {
+    title: "Conversion Rate",
+    value: "3.24%",
+    change: "-0.4%",
+    changeType: "decrease" as const,
+    icon: TrendingUp,
+  },
+  {
+    title: "Page Views",
+    value: "892,340",
+    change: "+15.3%",
+    changeType: "increase" as const,
+    icon: Activity,
   },
 ]
 
