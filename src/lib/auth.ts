@@ -129,7 +129,6 @@ export const authOptions: NextAuthOptions = {
             };
         },
         async redirect({ baseUrl }) {
-            // 登录成功后统一跳转到 /dashboard
             return `${baseUrl}/dashboard`;
         },
     },
