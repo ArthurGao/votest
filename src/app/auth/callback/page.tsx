@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Shield, Loader2, AlertCircle } from "lucide-react"
 
-export default function AuthCallbackPage() {
+function CallbackContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [status, setStatus] = useState<"loading" | "success" | "error">("loading")
@@ -65,52 +65,44 @@ export default function AuthCallbackPage() {
   }, [searchParams, router])
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-white p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="mx-auto w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
             <Shield className="h-6 w-6 text-blue-600" />
           </div>
-          <CardTitle className="text-2xl">
-            {status === "loading" && "Completing Sign In..."}
-            {status === "success" && "Welcome to CISO360AI!"}
-            {status === "error" && "Sign In Failed"}
-          </CardTitle>
-          <CardDescription>
-            {status === "loading" && "Please wait while we complete your authentication"}
-            {status === "success" && "Redirecting you to your dashboard"}
-            {status === "error" && "There was a problem signing you in"}
-          </CardDescription>
+          <CardTitle className="text-2xl">Signing In...</CardTitle>
+          <CardDescription>Processing your authentication, please wait.</CardDescription>
         </CardHeader>
-        <CardContent className="text-center">
+        <CardContent>
           {status === "loading" && (
-            <div className="flex items-center justify-center space-x-2">
+            <div className="flex flex-col items-center space-y-2">
               <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
-              <span className="text-gray-600">Processing...</span>
+              <span>Signing you in...</span>
             </div>
           )}
-
-          {status === "success" && (
-            <div className="text-green-600">
-              <div className="text-4xl mb-2">✓</div>
-              <p>Authentication successful!</p>
-            </div>
-          )}
-
           {status === "error" && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-center space-x-2 text-red-600">
-                <AlertCircle className="h-6 w-6" />
-                <span>Authentication Error</span>
-              </div>
-              <p className="text-sm text-gray-600">{error}</p>
-              <button onClick={() => router.push("/auth/signin")} className="text-blue-600 hover:underline text-sm">
-                Try signing in again
-              </button>
+            <div className="flex flex-col items-center space-y-2 text-red-600">
+              <AlertCircle className="h-6 w-6" />
+              <span>{error}</span>
+            </div>
+          )}
+          {status === "success" && (
+            <div className="flex flex-col items-center space-y-2 text-green-600">
+              <Loader2 className="h-6 w-6 animate-spin" />
+              <span>Login successful! Redirecting...</span>
             </div>
           )}
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export default function AuthCallbackPage() {
+  return (
+    <Suspense>
+      <CallbackContent />
+    </Suspense>
   )
 }

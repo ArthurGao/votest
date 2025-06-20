@@ -16,6 +16,26 @@ interface ZitadelUser {
     organization?: { name?: string };
 }
 
+// 类型定义
+interface ZitadelJWT extends JWT {
+  accessToken?: string;
+  idToken?: string;
+  refreshToken?: string;
+  tokenType?: string;
+  expiresIn?: number;
+  expiresAt?: number;
+  user?: ZitadelUser;
+  error?: unknown;
+}
+interface ZitadelSession extends Session {
+  accessToken?: string;
+  idToken?: string;
+  refreshToken?: string;
+  tokenType?: string;
+  expiresIn?: number;
+  error?: unknown;
+}
+
 export const authOptions: NextAuthOptions = {
     pages: {
         signIn: "/auth/signin",
@@ -101,15 +121,15 @@ export const authOptions: NextAuthOptions = {
                     orgName: user?.organization?.name,
                 },
                 clientId: process.env.ZITADEL_CLIENT_ID,
-                accessToken: (token as any).accessToken,
-                idToken: (token as any).idToken,
-                refreshToken: (token as any).refreshToken,
-                tokenType: (token as any).tokenType,
-                expiresIn: (token as any).expiresIn,
+                accessToken: (token as ZitadelJWT).accessToken,
+                idToken: (token as ZitadelJWT).idToken,
+                refreshToken: (token as ZitadelJWT).refreshToken,
+                tokenType: (token as ZitadelJWT).tokenType,
+                expiresIn: (token as ZitadelJWT).expiresIn,
                 error: tokenError,
             };
         },
-        async redirect({ url, baseUrl }) {
+        async redirect({ baseUrl }) {
             // 登录成功后统一跳转到 /dashboard
             return `${baseUrl}/dashboard`;
         },
@@ -124,12 +144,12 @@ async function refreshAccessToken(token: JWT): Promise<JWT> {
             client_secret: process.env.ZITADEL_CLIENT_SECRET as string,
             token_endpoint_auth_method: "client_secret_basic",
         });
-        const { refresh_token, access_token, expires_at } = await client.refresh((token as any).refreshToken as string);
+        const { refresh_token, access_token, expires_at } = await client.refresh((token as ZitadelJWT).refreshToken as string);
         return {
             ...token,
             accessToken: access_token,
             expiresAt: (expires_at ?? 0) * 1000,
-            refreshToken: refresh_token ?? (token as any).refreshToken,
+            refreshToken: refresh_token ?? (token as ZitadelJWT).refreshToken,
         };
     } catch (error) {
         console.error("Error during refreshAccessToken", error);
@@ -155,15 +175,18 @@ export async function checkAuth() {
 
 export async function getAccessToken() {
     const session = await getSession();
-    return (session as any)?.accessToken || null;
+    return (session as ZitadelSession)?.accessToken || null;
 }
 
 export function isTokenExpiringSoon() {
-    const session = getSession();
-    if (!session) return true;
-    const expiresIn = session.then((s: any) => s?.expiresIn || 0);
+    const sessionPromise = getSession();
+    if (!sessionPromise) return true;
     const fiveMinutes = 5 * 60; // 5 minutes in seconds
-    return expiresIn.then((exp: number) => exp < fiveMinutes);
+    return sessionPromise.then((s: Session | null) => {
+        if (!s) return true;
+        const expiresIn = (s as ZitadelSession).expiresIn || 0;
+        return expiresIn < fiveMinutes;
+    });
 }
 
 export async function handleAuthError(error: unknown) {

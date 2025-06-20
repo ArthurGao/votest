@@ -23,7 +23,7 @@ export function UserManagement() {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">User Management</h1>
-          <p className="text-muted-foreground">Manage your organization's users, roles, and permissions</p>
+          <p className="text-muted-foreground">Manage your organization&apos;s users, roles, and permissions</p>
         </div>
         <div className="flex items-center gap-2">
           <Button variant="outline" onClick={() => setShowFilters(true)}>

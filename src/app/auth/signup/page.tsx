@@ -70,7 +70,7 @@ export default function SignUpPage() {
 
     // Check if user already exists (simple demo check)
     const existingUsers = JSON.parse(localStorage.getItem("ciso360ai-users") || "[]")
-    const userExists = existingUsers.find((user: any) => user.email === formData.email)
+    const userExists = existingUsers.find((user: { email: string; [key: string]: unknown }) => user.email === formData.email)
 
     if (userExists) {
       setError("An account with this email already exists.")
