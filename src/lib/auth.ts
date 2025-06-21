@@ -4,6 +4,7 @@ import { Issuer } from "openid-client"
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation"
 import { getSession } from "next-auth/react"
+import { cookies } from "next/headers"
 import type { NextAuthOptions, Session } from "next-auth"
 import type { JWT } from "next-auth/jwt"
 
@@ -163,7 +164,33 @@ export async function requireAuth() {
     if (!session?.user) {
         redirect("/auth/signin");
     }
-    return session;
+    return session as ZitadelSession;
+}
+
+export async function getIdToken() {
+    const session = await requireAuth();
+    return session?.idToken ?? null;
+}
+
+export async function getOrgAndProjectIds() {
+    const cookieStore = await cookies();
+    const orgProjectCookie = cookieStore.get('current_org_project')?.value;
+
+    if (!orgProjectCookie) {
+        console.error("Organization/Project cookie not found.");
+        return null;
+    }
+
+    const parts = orgProjectCookie.split('/');
+    const orgId = parts.find((p: string) => p.startsWith('organization:'));
+    const projectId = parts.find((p: string) => p.startsWith('project:'));
+
+    if (!orgId || !projectId) {
+        console.error("Invalid format for org/project cookie.");
+        return null;
+    }
+
+    return { orgId, projectId };
 }
 
 export async function checkAuth() {

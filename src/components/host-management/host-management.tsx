@@ -12,7 +12,16 @@ import { AddHostDialog } from "@/components/host-management/add-host-dialog"
 import { FilterDialog } from "@/components/host-management/filter-dialog"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 
-export function HostManagement() {
+interface Host {
+  id: string;
+  hostname: string;
+}
+
+interface HostManagementProps {
+  hosts: Host[];
+}
+
+export function HostManagement({ hosts }: HostManagementProps) {
   const [searchQuery, setSearchQuery] = React.useState("")
   const [showAddHost, setShowAddHost] = React.useState(false)
   const [showFilters, setShowFilters] = React.useState(false)
@@ -72,7 +81,7 @@ export function HostManagement() {
               />
             </div>
           </div>
-          <HostTable searchQuery={searchQuery} />
+          <HostTable searchQuery={searchQuery} hosts={hosts} />
         </CardContent>
       </Card>
 

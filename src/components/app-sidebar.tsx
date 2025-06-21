@@ -1,6 +1,6 @@
 import type * as React from "react"
 import type { Session } from "next-auth"
-import { requireAuth } from "@/lib/auth"
+import { getIdToken, requireAuth } from "@/lib/auth"
 import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
@@ -182,11 +182,12 @@ const projects = [
 export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = await fetchUser();
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const idToken = await getIdToken();
 
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <OrgSwitcher apiUrl={apiUrl} />
+        <OrgSwitcher apiUrl={apiUrl} idToken={idToken} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMain} />

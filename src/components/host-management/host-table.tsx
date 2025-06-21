@@ -15,41 +15,33 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Checkbox } from "@/components/ui/checkbox"
 
-// Sample host data
-const hosts = [
-  {
-    id: "host-1",
-    hostname: "web-server-01",
-    ipAddress: "192.168.1.10",
-    os: "Ubuntu 22.04",
-    status: "Active",
-  },
-  {
-    id: "host-2",
-    hostname: "db-server-main",
-    ipAddress: "192.168.1.15",
-    os: "CentOS 9",
-    status: "Active",
-  },
-  {
-    id: "host-3",
-    hostname: "app-worker-alpha",
-    ipAddress: "10.0.5.21",
-    os: "Windows Server 2022",
-    status: "Offline",
-  },
-];
-
-interface HostTableProps {
-  searchQuery: string
+interface Host {
+  id: string;
+  hostname: string;
 }
 
-export function HostTable({ searchQuery }: HostTableProps) {
+// Helper arrays for mock data
+const mockIPs = ["192.168.1.10", "10.0.5.21", "172.16.3.45", "192.168.2.108"];
+const mockOS = ["Ubuntu 22.04", "CentOS 9", "Windows Server 2022", "Debian 11"];
+const mockStatuses = ["Active", "Offline", "Active", "Vulnerable"];
+
+
+interface HostTableProps {
+  searchQuery: string;
+  hosts: Host[];
+}
+
+export function HostTable({ searchQuery, hosts }: HostTableProps) {
   const filteredHosts = hosts.filter(
     (host) =>
-      host.hostname.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      host.ipAddress.toLowerCase().includes(searchQuery.toLowerCase())
+      host.hostname.toLowerCase().includes(searchQuery.toLowerCase())
   )
+
+  const getMockData = (index: number) => ({
+    ipAddress: mockIPs[index % mockIPs.length],
+    os: mockOS[index % mockOS.length],
+    status: mockStatuses[index % mockStatuses.length],
+  });
 
   return (
     <div className="rounded-md border">
@@ -65,35 +57,38 @@ export function HostTable({ searchQuery }: HostTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredHosts.map((host) => (
-            <TableRow key={host.id}>
-              <TableCell><Checkbox /></TableCell>
-              <TableCell>
-                <div className="font-medium">{host.hostname}</div>
-                <div className="text-sm text-muted-foreground">{host.ipAddress}</div>
-              </TableCell>
-              <TableCell>{host.os}</TableCell>
-              <TableCell>
-                <Badge variant={host.status === "Active" ? "default" : "secondary"}>
-                  {host.status}
-                </Badge>
-              </TableCell>
-              <TableCell>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem>Edit Host</DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive">Delete Host</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          ))}
+          {filteredHosts.map((host, index) => {
+            const mockData = getMockData(index);
+            return (
+              <TableRow key={host.id}>
+                <TableCell><Checkbox /></TableCell>
+                <TableCell>
+                  <div className="font-medium">{host.hostname}</div>
+                  <div className="text-sm text-muted-foreground">{mockData.ipAddress}</div>
+                </TableCell>
+                <TableCell>{mockData.os}</TableCell>
+                <TableCell>
+                  <Badge variant={mockData.status === "Active" ? "default" : "secondary"}>
+                    {mockData.status}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="h-8 w-8 p-0">
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuItem>Edit Host</DropdownMenuItem>
+                      <DropdownMenuItem className="text-destructive">Delete Host</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </TableCell>
+              </TableRow>
+            )
+          })}
         </TableBody>
       </Table>
     </div>
