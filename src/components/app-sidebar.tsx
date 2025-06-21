@@ -4,7 +4,7 @@ import { requireAuth } from "@/lib/auth"
 import { NavMain } from "@/components/nav-main"
 import { NavProjects } from "@/components/nav-projects"
 import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { OrgSwitcher } from "@/components/org-switcher"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar"
 
 // --- Data Fetching Logic ---
@@ -56,49 +56,6 @@ async function fetchUser() {
       };
   }
 }
-
-async function fetchTeams() {
-  try {
-      const session = await requireAuth() as CustomSession;
-      const idToken = session?.idToken;
-
-      if (!idToken) {
-          throw new Error("ID token not found in session for fetching teams.");
-      }
-
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      if (!apiUrl) {
-          throw new Error("API URL is not configured.");
-      }
-
-      const response = await fetch(`${apiUrl}/auth/me/orgs`, {
-          headers: {
-              Authorization: `Bearer ${idToken}`,
-          },
-          cache: 'no-store',
-      });
-
-      if (!response.ok) {
-          const errorBody = await response.text();
-          console.error(`Failed to fetch teams: ${response.status} ${response.statusText}`, { errorBody });
-          throw new Error(`Failed to fetch teams.`);
-      }
-
-      const orgs = await response.json();
-
-      return orgs.map((org: { id: string, name: string }) => ({
-          id: org.id,
-          name: org.name,
-          icon: "users",
-          plan: "Member",
-      }));
-
-  } catch (error) {
-      console.error("Error fetching teams:", error);
-      return [];
-  }
-}
-// --- End Data Fetching Logic ---
 
 const navMain = [
   {
@@ -231,15 +188,13 @@ const projects = [
 ]
 
 export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const [user, teams] = await Promise.all([
-    fetchUser(),
-    fetchTeams(),
-  ]);
+  const user = await fetchUser();
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={teams} />
+        <OrgSwitcher apiUrl={apiUrl} />
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMain} />
