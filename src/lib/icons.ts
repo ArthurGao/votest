@@ -3,6 +3,7 @@ import {
     BookOpen,
     Bot,
     Command,
+    Database,
     GalleryVerticalEnd,
     Frame,
     PieChart,
@@ -25,4 +26,5 @@ export const iconMap: Record<string, LucideIcon> = {
     bot: Bot,
     "book-open": BookOpen,
     "settings-2": Settings2,
+    database: Database,
 }; 

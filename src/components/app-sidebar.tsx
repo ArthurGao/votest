@@ -103,21 +103,13 @@ const navMain = [
     ],
   },
   {
-    title: "Models",
+    title: "Assets",
     url: "#",
-    icon: "bot",
+    icon: "database",
     items: [
       {
-        title: "Genesis",
-        url: "#",
-      },
-      {
-        title: "Explorer",
-        url: "#",
-      },
-      {
-        title: "Quantum",
-        url: "#",
+        title: "Hosts",
+        url: "/assets/hosts",
       },
     ],
   },
